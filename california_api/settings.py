@@ -42,8 +42,11 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'drf_yasg',
+    'rest_framework_simplejwt',
     
-    'products'
+    
+    'products',
+    'account'
 ]
 
 MIDDLEWARE = [
