@@ -23,7 +23,7 @@ class UserManager(BaseUserManager):
                 'Требуется имэйл'
             )
         email = self.normalize_email(email)
-        user = self.model(email, **kwargs)
+        user = self.model(email=email, **kwargs)
         user.set_password(password)
         user.is_active = True
         user.is_staff = True

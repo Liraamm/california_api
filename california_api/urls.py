@@ -15,9 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from django.conf import settings
+from django.conf.urls.static import static
+
+schema_view = get_schema_view(openapi.Info(
+    title='Callifornia_api',
+    description='Online shop',
+    default_version='v1',
+    public='True'
+))
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('docs/', schema_view.with_ui('swagger')),
     path('api/v1/', include('products.urls')),
-    path('api/v1/', include('account.urls'))
+    path('api/v1/', include('account.urls')),
 ]
+
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
