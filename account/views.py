@@ -1,10 +1,11 @@
 from django.shortcuts import render
 
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 
-from .serializers import RegisterSerializer, ChangePasswordSerializer, ForgotPasswordSerializer, ForgotPasswordCompleteSerializer
+from .serializers import RegisterSerializer, ChangePasswordSerializer, ForgotPasswordSerializer, ForgotPasswordCompleteSerializer, UserSerializer
 from .models import User
 
 
@@ -65,3 +66,15 @@ class ForgotPasswordCompleteView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.set_new_password()
             return Response('Пароль успешно изменен')
+
+
+class UserDetail(APIView):
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            user_data = {
+                'email': user.email
+            }
+            return Response(user_data)
+        else:
+            return Response({'error': 'Пользователь не аутентифицирован'}, status=status.HTTP_401_UNAUTHORIZED)
