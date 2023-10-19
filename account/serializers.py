@@ -115,3 +115,9 @@ class ForgotPasswordCompleteSerializer(serializers.Serializer):
         user.set_password(password)
         user.activation_code = ''
         user.save()
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
